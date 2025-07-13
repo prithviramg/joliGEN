@@ -1,0 +1,44 @@
+{
+    // Use IntelliSense to learn about possible attributes.
+    // Hover to view descriptions of existing attributes.
+    // For more information, visit: https://go.microsoft.com/fwlink/?linkid=830387
+    "version": "0.2.0",
+    "configurations": [
+        {
+            "name": "Python Debugger: gen_single_image_diffusion.py",
+            "type": "debugpy",
+            "request": "launch",
+            "program": "${workspaceFolder}/scripts/gen_single_image_diffusion.py",
+            "console": "integratedTerminal",
+            "justMyCode": false,
+            "args": [
+                "--model_in_file", "D:\\GIT\\joliGEN\\weights\\latest_net_G_A.pth",
+                "--img_in", "D:\\database\\mapillary\\mapillary_lite\\trainA\\images\\UbLxBV0FEP_FfEgGi0YhIA.jpg",
+                "--bbox_in", "D:\\database\\mapillary\\mapillary_lite\\trainA\\bbox\\UbLxBV0FEP_FfEgGi0YhIA.txt",
+                "--dir_out", "D:\\GIT\\joliGEN\\mapillary_inference_output",
+                "--image_width", "128",
+                "--img_height", "128",
+                "--mask_delta", "10",
+                "--alg_diffusion_cond_image_creation", "canny",
+                "--alg_diffusion_sketch_canny_thresholds", "50", "150",
+                "--cond_in", "D:\\Downloads\\SL30.jpg"
+            ]
+        },
+        {
+            "name": "Python Debugger: train.py",
+            "type": "debugpy",
+            "request": "launch",
+            "program": "${workspaceFolder}/train.py",
+            "console": "integratedTerminal",
+            "justMyCode": false,
+            "args": [
+                // "--model_in_file", "D:\\GIT\\joliGEN\\weights\\latest_net_G_A.pth",
+                "--dataroot", "D:\\database\\mapillary\\mapillary_full",
+                "--checkpoints_dir", "D:\\GIT\\joliGEN\\ckpts",
+                "--name", "mapillary",
+                "--config_json", "examples/example_ddpm_mapillary.json",
+                "--alg_diffusion_vid_canny_dropout", "0.1,0.2", "0.3,0.4"
+            ]
+        }
+    ]
+}
