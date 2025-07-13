@@ -1643,3 +1643,50 @@ class UNetGeneratorRefAttn(nn.Module):
         b, *_ = t.shape
         out = a.gather(-1, t)
         return out.reshape(b, *((1,) * (len(x_shape) - 1)))
+from torchinfo import summary
+import torch
+import sys
+
+# Example usage:
+
+if __name__ == '__main__':
+  # Example usage:
+    model = UNet(
+        image_size=128,
+        in_channel=6,
+        inner_channel=64,
+        out_channel=3,
+        res_blocks=[2, 2, 2, 2],
+        attn_res=[16],
+        tanh=False,
+        n_timestep_train=2000,
+        n_timestep_test=1000,
+        norm='groupnorm',
+        group_norm_size=32,
+        cond_embed_dim=32,
+        dropout=0,
+        channel_mults=(1, 2, 4, 8),
+        conv_resample=True,
+        use_checkpoint=False,
+        use_fp16=False,
+        num_heads=1,
+        num_head_channels=-1,
+        num_heads_upsample=-1,
+        use_scale_shift_norm=True,
+        resblock_updown=True,
+        use_new_attention_order=False,
+        efficient=False,
+        freq_space=False,
+    )
+
+
+    # Dummy input data
+    batch_size = 2
+    input_shape = (batch_size, model.in_channel, model.image_size, model.image_size)  # Adjust shape based on your input size
+    input_data = torch.randn(input_shape)
+    embed_gammas = torch.randn(batch_size, model.cond_embed_dim)
+
+    with open("model.txt", "w", encoding="utf-8") as f:
+        sys.stdout = f
+        summary(model, input_data=input_data, col_names=["input_size", "output_size", "num_params", "kernel_size", "trainable"], depth = 10)
+        sys.stdout = sys.__stdout__  # Reset stdout
