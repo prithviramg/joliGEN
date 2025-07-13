@@ -575,13 +575,19 @@ def generate(
         else:
             img_tensor_canny = img_tensor
             mask_canny = mask
+        kwargs = {
+                     "low_threshold_random": np.random.randint(50, 100),
+                     "high_threshold_random": np.random.randint(100, 150),
+                     "select_canny": [1,]
+                 }
         canny = fill_img_with_canny(
             img_tensor_canny.unsqueeze(0),
             mask_canny.unsqueeze(0),
             low_threshold=alg_diffusion_sketch_canny_thresholds[0],
             high_threshold=alg_diffusion_sketch_canny_thresholds[1],
-            low_threshold_random=-1,
-            high_threshold_random=-1,
+            low_threshold_random=50,
+            high_threshold_random=150,
+            select_canny = [1,]
         )
         if cond_in:
             # restore background
